@@ -7,27 +7,74 @@ FSJS project 2 - List Filter and Pagination
 
 
 /***
-   Add your global variables that store the DOM elements you will
-   need to reference and/or manipulate.
+   Add global variables.
 ***/
-const students = document.querySelectorAll(".student-item"); /*** select the student item class ***/
-const maxStudents = 10; /*** will make maximum 10 students per page ***/
+/*** will select the student item class ***/
+const studentItem = document.querySelectorAll(".student-item");
+/*** will show maximum 10 students per page ***/
+const maxStudents = 10;
 const maxPages = 15;
-let pageNumber = 1; /*** start the page at page 1 ***/
+/** will show max number of pages need **/
+const pageNumber = Math.ceil(studentItem.length / maxStudents);
+
 
 
 
 /***
-   Create the `showPage` function to hide all of the items in the
-   list except for the ten you want to show.
+   Create the `showPage` function.
 ***/
-const showPage = (list, page) => {
+showPage = (list, page) => {
+  for (let i = 0; i < studentItem.length; i++ ) {
+    if( i >= (page - 1) * maxStudents && i < (page * maxStudents)) {
+      list[i].style.display = "";
+    } else {
+      list[i].style.display = "none";
+    }
+  }
+}
+showPage(studentItem, 1)
+
+
+
+/***
+   Create the `appendPageLinks function`.
+***/
+const appendPageLinks = () => {
+  console.log(pageNumber);
+  /** will ceate div w/ pagination class **/
+  let div = document.createElement("div");
+    div.className = "pagination";
+    document.querySelector(".page").appendChild(div);
+  /** will append to ul **/
+  let ul = document.createElement("ul");
+    div.appendChild(ul);
+  for (let i = 0; i < pageNumber; i++) {
+
+      let li = document.createElement("li");
+      let a = document.createElement("a");
+  /** will add eventlistener on bt click **/
+    a.addEventListener("click",(e)=> {
+      const getAllanchor = e.target.parentNode.parentNode.querySelectorAll("a");
+         for (let j=0; j < getAllanchor.length; j++) {
+            getAllanchor[j].classList.remove("active");
+           }
+           e.target.classList.add("active");
+           showPage(studentItem, i+1);
+        });/** will add number buttons **/
+        a.href = "#";
+        a.textContent = i;
+
+        li.appendChild(a);
+        ul.appendChild(li);
+
+        if(i == 0) {
+           a.classList.add("active");
+        }
+     }
+
 
 }
 
 
 
-/***
-   Create the `appendPageLinks function` to generate, append, and add
-   functionality to the pagination buttons.
-***/
+appendPageLinks();
