@@ -77,4 +77,4 @@ const appendPageLinks = () => {
 
 
 
-appendPageLinks();
+appendPageLinks(); /** calling function, creates the page links **/
