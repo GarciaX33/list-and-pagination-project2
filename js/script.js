@@ -48,7 +48,7 @@ const appendPageLinks = () => {
   /** will append to ul **/
   let ul = document.createElement("ul");
     div.appendChild(ul);
-  for (let i = 0; i < pageNumber; i++) {
+  for (let i = 1; i < pageNumber; i++) {
 
       let li = document.createElement("li");
       let a = document.createElement("a");
